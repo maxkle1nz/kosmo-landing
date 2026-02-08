@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOSMO • Il tuo assistente personale su WhatsApp</title>
-    <meta name="description" content="KOSMO è l'assistente AI su WhatsApp che gestisce le tue fatture, organizza la tua email e non ti fa perdere mai una scadenza.">
+    <meta name="description" content="Il tuo assistente AI personale su WhatsApp. Documenti, ricerche, comunicazione, analisi. Tutto con un messaggio.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,18 +22,15 @@
             --text-dim: rgba(255, 255, 255, 0.7);
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --blur: 10px;
+            --blur: 12px;
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 8px;
             --container-width: 1200px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -41,22 +38,12 @@
             color: var(--white);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
 
         /* --- LAYOUT UTILS --- */
         .container {
@@ -67,53 +54,53 @@
             z-index: 2;
         }
 
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .grid {
-            display: grid;
-            gap: 24px;
-        }
-
+        .section { padding: 100px 0; position: relative; }
+        
+        .grid { display: grid; gap: 24px; }
         .grid-2 { grid-template-columns: repeat(2, 1fr); }
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
         
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 900px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
             .section { padding: 60px 0; }
+        }
+        @media (max-width: 600px) {
+            .grid-4 { grid-template-columns: 1fr; }
+            h1 { font-size: 2.5rem !important; }
         }
 
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3, h4 {
-            line-height: 1.2;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        h1 { font-size: 3.5rem; letter-spacing: -0.02em; }
-        h2 { font-size: 2.5rem; letter-spacing: -0.01em; margin-bottom: 2rem; text-align: center; }
-        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; color: var(--white); }
+        h1 { font-size: 4rem; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        h2 { font-size: 3rem; letter-spacing: -0.02em; margin-bottom: 1.5rem; text-align: center; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
         
         .subheadline {
             font-size: 1.25rem;
             color: var(--text-dim);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             max-width: 600px;
+            font-weight: 400;
         }
 
         .section-desc {
             text-align: center;
             color: var(--text-dim);
             max-width: 700px;
-            margin: -1.5rem auto 3rem;
-            font-size: 1.1rem;
+            margin: -1rem auto 4rem;
+            font-size: 1.2rem;
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
+        .text-center { text-align: center; }
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* --- COMPONENTS --- */
@@ -121,35 +108,28 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 1.1rem;
+            transition: var(--transition);
             cursor: pointer;
             border: none;
+            gap: 10px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-green {
-            background: var(--whatsapp-green);
-            color: #fff;
-        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        .btn-green { background: var(--whatsapp-green); color: #fff; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+        .btn-green:hover { background: #20bd5a; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
 
         .btn-outline {
-            border: 2px solid rgba(255,255,255,0.2);
-            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
             color: var(--white);
+            backdrop-filter: blur(5px);
         }
-
-        .btn-outline:hover {
-            border-color: var(--white);
-            background: rgba(255,255,255,0.1);
-        }
+        .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.15); }
 
         .card {
             background: var(--glass-bg);
@@ -157,37 +137,29 @@
             backdrop-filter: blur(var(--blur));
             border-radius: var(--radius-lg);
             padding: 32px;
-            transition: transform 0.3s;
+            transition: var(--transition);
+            height: 100%;
         }
+        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); }
 
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.08);
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
         }
+        .badge-violet { background: rgba(123, 104, 238, 0.2); color: #a5b4fc; border: 1px solid rgba(123, 104, 238, 0.3); }
 
         /* --- HEADER --- */
         header {
-            padding: 24px 0;
+            padding: 20px 0;
             position: absolute;
-            top: 0;
-            width: 100%;
-            z-index: 10;
+            top: 0; width: 100%; z-index: 50;
         }
-        
-        .nav-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #fff 0%, var(--text-dim) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.05em; color: var(--white); }
 
         /* --- HERO --- */
         .hero {
@@ -195,429 +167,175 @@
             display: flex;
             align-items: center;
             padding-top: 100px;
-            position: relative;
             overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(123,104,238,0.2) 0%, rgba(10,31,68,0) 70%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .social-proof {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 32px;
-            font-size: 0.9rem;
-            color: var(--text-dim);
+            background: radial-gradient(circle at 70% 20%, rgba(123,104,238,0.15) 0%, rgba(10,31,68,0) 60%);
         }
         
+        .hero-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
+        
+        .social-proof { display: flex; align-items: center; gap: 16px; margin-top: 40px; font-size: 0.95rem; color: var(--text-dim); }
         .avatars { display: flex; }
-        .avatars img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--bg-deep);
-            margin-left: -10px;
-        }
+        .avatars img { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--bg-deep); margin-left: -12px; }
         .avatars img:first-child { margin-left: 0; }
 
         /* PHONE MOCKUP */
         .phone-mockup {
-            width: 300px;
-            height: 600px;
-            background: #111;
-            border-radius: 40px;
-            border: 8px solid #2c2c2c;
+            width: 320px; height: 650px;
+            background: #000;
+            border-radius: 45px;
+            border: 8px solid #333;
             margin: 0 auto;
             position: relative;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
-        
         .phone-screen {
-            background: #0d1418; /* WhatsApp dark bg */
+            background: #0b141a; /* WhatsApp dark bg */
             height: 100%;
-            padding: 20px;
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            overflow-y: hidden;
-            font-family: Helvetica, Arial, sans-serif;
+            gap: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 14px;
-        }
-
-        .chat-header {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 60px;
-            background: #202c33;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            color: #e9edef;
-            z-index: 2;
-        }
-
-        .chat-bubble {
-            max-width: 85%;
-            padding: 8px 12px;
-            border-radius: 8px;
-            position: relative;
-            line-height: 1.4;
-        }
-
-        .bubble-in {
-            align-self: flex-start;
-            background: #202c33;
-            color: #e9edef;
-            border-top-left-radius: 0;
-            margin-top: 40px; /* space for header */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
         
-        .bubble-out {
-            align-self: flex-end;
-            background: #005c4b;
-            color: #e9edef;
-            border-top-right-radius: 0;
+        .chat-top-bar {
+            position: absolute; top: 0; left: 0; right: 0; height: 70px;
+            background: #202c33; padding: 0 16px; display: flex; align-items: center; z-index: 10;
         }
-
-        .bubble-time {
-            font-size: 10px;
-            color: rgba(255,255,255,0.6);
-            display: block;
-            text-align: right;
-            margin-top: 4px;
-        }
+        .chat-top-avatar { width: 40px; height: 40px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; }
+        
+        .msg { max-width: 85%; padding: 8px 12px; border-radius: 8px; font-size: 14px; position: relative; margin-bottom: 4px; line-height: 1.4; box-shadow: 0 1px 0.5px rgba(0,0,0,0.13); }
+        .msg-in { background: #202c33; color: #fff; align-self: flex-start; border-top-left-radius: 0; }
+        .msg-out { background: #005c4b; color: #fff; align-self: flex-end; border-top-right-radius: 0; }
+        .msg-time { font-size: 10px; color: rgba(255,255,255,0.6); text-align: right; margin-top: 4px; display: flex; justify-content: flex-end; align-items: center; gap: 3px; }
 
         @media (max-width: 900px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero { padding-top: 120px; align-items: flex-start; }
             .subheadline { margin: 0 auto 2rem; }
             .social-proof { justify-content: center; }
-            .phone-mockup { margin-top: 40px; height: 500px; }
+            .phone-mockup { margin-top: 40px; height: 500px; width: 280px; }
         }
 
-        /* --- PROBLEM --- */
-        .problem-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
+        /* --- CAPABILITIES GRID --- */
+        .cap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .cap-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+            padding: 24px; border-radius: var(--radius-md); text-align: center; transition: var(--transition);
         }
-
-        /* --- SOLUTION --- */
-        .solution-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        
-        .cap-badge {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
-            padding: 20px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .cap-badge:hover { background: rgba(255,255,255,0.08); }
-        .cap-icon { font-size: 2rem; }
-        .cap-text { font-weight: 500; font-size: 0.95rem; }
+        .cap-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); border-color: var(--accent-violet); }
+        .cap-emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+        .cap-title { font-weight: 700; margin-bottom: 6px; color: var(--white); }
+        .cap-desc { font-size: 0.9rem; color: var(--text-dim); }
 
         /* --- HOW IT WORKS --- */
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            position: relative;
+        .step-card { text-align: center; position: relative; padding: 20px; }
+        .step-num { 
+            width: 60px; height: 60px; background: var(--accent-violet); color: white;
+            border-radius: 50%; font-size: 1.5rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px; box-shadow: 0 0 20px rgba(123, 104, 238, 0.4);
         }
-
-        .steps-line {
-            position: absolute;
-            top: 40px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-violet), transparent);
-            z-index: 0;
-        }
-
-        .step-item {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: var(--bg-deep);
-            border: 2px solid var(--accent-violet);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent-violet);
-            margin: 0 auto 24px;
-            box-shadow: 0 0 20px rgba(123,104,238,0.3);
-        }
-
-        @media (max-width: 768px) {
-            .steps-container { grid-template-columns: 1fr; }
-            .steps-line { display: none; }
-        }
-
+        
         /* --- USE CASES --- */
-        .use-case-card ul {
-            margin-top: 16px;
-            font-size: 0.9rem;
-            color: var(--text-dim);
+        .profession-card {
+            display: flex; flex-direction: column; height: 100%;
         }
-        .use-case-card li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
+        .prof-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; }
+        .prof-icon { font-size: 2rem; }
+        .prof-list li { 
+            position: relative; padding-left: 20px; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-dim);
         }
-        .use-case-card li::before {
-            content: "•";
-            color: var(--accent-coral);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
+        .prof-list li::before {
+            content: "•"; color: var(--whatsapp-green); position: absolute; left: 0; font-weight: bold;
         }
 
         /* --- PRICING --- */
-        .pricing-toggle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 40px;
+        .toggle-container {
+            display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 50px;
         }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
+        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(255,255,255,0.2);
-            transition: .4s;
-            border-radius: 34px;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.2); transition: .4s; border-radius: 34px;
         }
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%;
         }
         input:checked + .slider { background-color: var(--accent-violet); }
         input:checked + .slider:before { transform: translateX(26px); }
-
-        .discount-pill {
-            background: var(--accent-coral);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .price-card {
-            text-align: center;
-            position: relative;
-        }
         
-        .price-card.popular {
-            border: 2px solid var(--accent-violet);
-            background: rgba(123,104,238,0.1);
-        }
+        .price-tag { font-size: 3.5rem; font-weight: 800; margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .price-tag span { font-size: 1rem; color: var(--text-dim); font-weight: 400; margin-top: 15px; }
+        .feature-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-dim); }
         
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-violet);
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .price-amount {
-            font-size: 3rem;
-            font-weight: 800;
-            margin: 16px 0;
-        }
-        
-        .price-period {
-            font-size: 1rem;
-            color: var(--text-dim);
-            font-weight: 400;
-        }
-
-        .price-features {
-            text-align: left;
-            margin: 24px 0;
-            color: var(--text-dim);
-        }
-        .price-features li { margin-bottom: 10px; }
-
-        /* --- TESTIMONIALS --- */
-        .quote-icon {
-            font-size: 2rem;
-            color: var(--accent-violet);
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-        .quote-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 24px;
-        }
-        .quote-author {
-            font-weight: 700;
-            color: var(--white);
-        }
-        .quote-role {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-        
-        .stats-bar {
-            background: var(--glass-bg);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 24px 0;
-            margin-top: 60px;
-        }
-        .stats-content {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
         /* --- FAQ --- */
+        .faq-search {
+            width: 100%; max-width: 600px; margin: 0 auto 40px;
+            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
+            padding: 16px 24px; border-radius: 50px; color: white; font-size: 1.1rem;
+            display: block; transition: var(--transition);
+        }
+        .faq-search:focus { background: rgba(255,255,255,0.15); border-color: var(--accent-violet); outline: none; }
+        
+        .faq-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+        .faq-tab {
+            padding: 8px 20px; border-radius: 20px; background: rgba(255,255,255,0.05);
+            cursor: pointer; border: 1px solid transparent; transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .faq-tab.active { background: var(--accent-violet); color: white; }
+        
         .faq-item {
-            background: var(--glass-bg);
+            background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden;
             border: 1px solid var(--glass-border);
-            margin-bottom: 12px;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
         }
-        
-        .faq-question {
-            padding: 20px;
-            width: 100%;
-            text-align: left;
-            background: transparent;
-            border: none;
-            color: var(--white);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .faq-q {
+            padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            font-weight: 600; font-size: 1.1rem; transition: background 0.2s;
         }
-        
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            font-weight: 300;
+        .faq-q:hover { background: rgba(255,255,255,0.05); }
+        .faq-a {
+            max-height: 0; overflow: hidden; padding: 0 20px; color: var(--text-dim);
+            transition: all 0.3s cubic-bezier(0,1,0,1);
         }
-        
-        .faq-question.active::after {
-            content: '−';
-        }
+        .faq-item.open .faq-a { max-height: 1000px; padding-bottom: 20px; transition: all 0.3s ease-in-out; }
+        .faq-item.open .faq-q { color: var(--accent-violet); }
+        .faq-icon { transition: transform 0.3s; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-        .faq-answer {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
-            color: var(--text-dim);
-        }
-        
-        .faq-answer.open {
-            padding: 0 20px 20px;
-            max-height: 200px;
-        }
-
-        /* --- FINAL CTA --- */
-        .final-cta {
+        /* --- TRUST BADGES --- */
+        .trust-grid {
+            display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
             text-align: center;
-            padding: 80px 0;
-            background: radial-gradient(circle at center, rgba(37,211,102,0.1) 0%, rgba(10,31,68,0) 70%);
         }
-        
-        .checks {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 32px;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            flex-wrap: wrap;
-        }
+        .trust-item { max-width: 200px; }
+        .trust-icon { font-size: 2.5rem; margin-bottom: 15px; }
 
         /* --- FOOTER --- */
         footer {
             border-top: 1px solid var(--glass-border);
-            padding: 60px 0 30px;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 0.9rem;
+            padding: 80px 0 40px;
+            background: #051024;
         }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin: 24px 0;
-        }
+        .footer-logo { font-size: 2rem; font-weight: 800; margin-bottom: 20px; display: inline-block; }
 
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
         <div class="container nav-flex">
-            <div class="logo">KOSMO</div>
-            <a href="#contact" class="btn btn-outline">Contattaci</a>
+            <a href="#" class="logo">KOSMO</a>
+            <nav>
+                <a href="#pricing" class="btn btn-outline" style="padding: 10px 24px; font-size: 0.9rem;">Prezzi</a>
+            </nav>
         </div>
     </header>
 
@@ -625,55 +343,65 @@
     <section class="hero">
         <div class="container hero-content">
             <div>
+                <span class="badge badge-violet">Novità 2026</span>
                 <h1>Il tuo assistente personale su WhatsApp.</h1>
-                <p class="subheadline">Non un altro software complicato. KOSMO è l'AI che vive nella tua chat preferita e lavora mentre tu dormi.</p>
+                <p class="subheadline">Documenti, ricerche, comunicazione, analisi, promemoria. KOSMO capisce il tuo lavoro e lo fa per te. 24 ore su 24.</p>
                 
-                <a href="#pricing" class="btn btn-green">Prova gratis per 14 giorni</a>
-                
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <a href="https://wa.me/393534739386?text=Ciao%20KOSMO%2C%20voglio%20iniziare" class="btn btn-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.029.66 2.028 1.014 3.267 1.015 3.181-.001 5.768-2.587 5.768-5.765.001-3.186-2.59-5.77-5.768-5.77zm-9.031 5.765c0-4.978 4.053-9.031 9.031-9.031s9.031 4.053 9.031 9.031c0 4.976-4.053 9.03-9.031 9.03-1.63 0-3.149-.432-4.479-1.189l-5.552 1.456 1.485-5.393c-.87-1.428-1.385-3.085-1.385-4.873zm13.179 3.282c-.31-.155-1.837-.91-2.122-1.014-.284-.103-.491-.155-.698.155-.207.31-.798 1.014-.979 1.222-.181.207-.362.233-.672.078-1.424-.711-2.361-1.258-3.32-2.906-.129-.224.13-.347.387-.648.113-.133.225-.262.336-.393.111-.131.148-.222.222-.372.075-.15.037-.279-.019-.393-.056-.113-.499-1.202-.684-1.646-.18-.431-.365-.373-.502-.379-.129-.006-.277-.007-.425-.007-.148 0-.39.056-.593.279-.204.223-.777.76-.777 1.854s.796 2.152.907 2.302c.111.148 1.566 2.392 3.793 3.353.53.228.944.365 1.268.468.536.171 1.024.147 1.412.089.432-.065 1.837-.751 2.097-1.476.26-.725.26-1.346.182-1.475-.077-.129-.284-.207-.594-.362z"/></svg>
+                        Prova su WhatsApp
+                    </a>
+                </div>
+
                 <div class="social-proof">
                     <div class="avatars">
-                        <img src="https://i.pravatar.cc/100?img=1" alt="User">
-                        <img src="https://i.pravatar.cc/100?img=2" alt="User">
-                        <img src="https://i.pravatar.cc/100?img=3" alt="User">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="">
                     </div>
-                    <span>Scelto da 500+ professionisti</span>
+                    <span>Usato ogni giorno da 500+ professionisti</span>
                 </div>
             </div>
             
             <div class="phone-mockup">
-                <div class="chat-header">
-                    <div style="width:35px;height:35px;background:#25D366;border-radius:50%;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;">K</div>
-                    <div>
-                        <div style="font-weight:600;">KOSMO AI</div>
-                        <div style="font-size:11px;opacity:0.8;">Online</div>
-                    </div>
+                <div class="chat-top-bar">
+                    <div class="chat-top-avatar">K</div>
+                    <div style="color:white; font-weight:600;">KOSMO AI <br><span style="font-size:11px; font-weight:400; opacity:0.8;">Online</span></div>
                 </div>
                 <div class="phone-screen">
-                    <div style="margin-top:50px;"></div> <!-- Spacer -->
+                    <div style="margin-top: 60px;"></div>
                     
-                    <div class="chat-bubble bubble-out">
-                        Ciao KOSMO! Crea una fattura per Studio Rossi, 500€ per consulenza web.
-                        <span class="bubble-time">10:42</span>
-                    </div>
-                    
-                    <div class="chat-bubble bubble-in">
-                        Certamente! 📄<br>
-                        <strong>Fattura #42 generata con successo.</strong><br>
-                        Importo: 500€ + IVA<br>
-                        Destinatario: Studio Rossi<br><br>
-                        La invio subito via email?
-                        <span class="bubble-time">10:42</span>
+                    <div class="msg msg-out">
+                        Prepara un preventivo per il progetto Milano
+                        <div class="msg-time">10:42 <svg width="12" height="12" viewBox="0 0 24 24" fill="#34b7f1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                     </div>
 
-                    <div class="chat-bubble bubble-out">
-                        Sì, grazie! E ricordami di chiamarli lunedì.
-                        <span class="bubble-time">10:43</span>
+                    <div class="msg msg-in">
+                        ✅ <b>Preventivo pronto!</b><br>
+                        3 voci, totale €2.450.<br>
+                        Vuoi che lo invii al cliente?
+                        <div class="msg-time">10:42</div>
                     </div>
 
-                    <div class="chat-bubble bubble-in">
-                        Fatto! ✅ Email inviata.<br>
-                        Ho impostato un promemoria per lunedì alle 9:00: "Chiamare Studio Rossi".
-                        <span class="bubble-time">10:43</span>
+                    <div class="msg msg-out">
+                        Sì, e cercami 3 fornitori di marmo a Brescia
+                        <div class="msg-time">10:43 <svg width="12" height="12" viewBox="0 0 24 24" fill="#34b7f1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    </div>
+
+                    <div class="msg msg-in">
+                        🔍 <b>Trovati 5 fornitori.</b><br>
+                        I migliori 3 per rapporto qualità/prezzo:<br>
+                        1. Marmi Brescia SRL (4.8⭐)<br>
+                        2. PietraViva (4.5⭐)<br>
+                        3. EdilStone (4.3⭐)<br><br>
+                        Ti giro i contatti?
+                        <div class="msg-time">10:43</div>
+                    </div>
+                    
+                    <div class="msg msg-out">
+                        Analizza il mio fatturato di questo mese vs l'anno scorso
+                         <div class="msg-time">10:45 <svg width="12" height="12" viewBox="0 0 24 24" fill="#34b7f1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                     </div>
                 </div>
             </div>
@@ -683,85 +411,85 @@
     <!-- 2. PROBLEM -->
     <section class="section">
         <div class="container">
-            <h2>Sei un professionista,<br>non un amministratore.</h2>
-            <p class="section-desc">Quanto tempo perdi ogni giorno in attività che non portano valore al tuo business?</p>
+            <h2>Non lavorare di più.<br><span class="text-gradient">Lavora meglio.</span></h2>
+            <p class="section-desc">Il 40% del tuo tempo se ne va in burocrazia e gestione. Riprenditelo.</p>
             
             <div class="grid grid-3">
-                <div class="card">
-                    <div class="problem-icon">📄</div>
-                    <h3>Fatture infinite</h3>
-                    <p style="color:var(--text-dim)">Ore perse a compilare dati, calcolare IVA e inseguire i pagamenti. La burocrazia uccide la creatività.</p>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">📄</div>
+                    <h3>Documenti che rubano ore</h3>
+                    <p style="color:var(--text-dim)">Fatture, preventivi, contratti, lettere. Scriverli, formattarli e inviarli ti toglie tempo prezioso.</p>
                 </div>
-                <div class="card">
-                    <div class="problem-icon">📧</div>
-                    <h3>Caos Comunicativo</h3>
-                    <p style="color:var(--text-dim)">Messaggi su WhatsApp, email perse, note vocali dimenticate. Ritrovare un'informazione è un incubo.</p>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">📧</div>
+                    <h3>Comunicazioni perse</h3>
+                    <p style="color:var(--text-dim)">Email importanti sepolte, clienti che aspettano risposta, note vocali dimenticate nel flusso.</p>
                 </div>
-                <div class="card">
-                    <div class="problem-icon">🗓️</div>
-                    <h3>Scadenze Perse</h3>
-                    <p style="color:var(--text-dim)">Quel rinnovo dimenticato o quella call mancata che ti costano clienti e reputazione.</p>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🗓️</div>
+                    <h3>Cose che dimentichi</h3>
+                    <p style="color:var(--text-dim)">Quella scadenza fiscale, il rinnovo dell'assicurazione o quel follow-up promesso al cliente.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. SOLUTION -->
-    <section class="section">
-        <div class="container grid grid-2" style="align-items: center;">
+    <!-- 3. WHAT KOSMO CAN DO -->
+    <section class="section" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <h2>Tutto quello che serve.<br>Un messaggio.</h2>
+            <p class="section-desc">KOSMO sostituisce decine di app e tool frammentati.</p>
             
-            <!-- Left: Mockup (Simplified for secondary view) -->
-            <div class="phone-mockup" style="height: 500px; margin: 0 auto;">
-                <div class="chat-header">
-                     <div style="width:35px;height:35px;background:#25D366;border-radius:50%;margin-right:10px;display:flex;align-items:center;justify-content:center;">K</div>
-                     <div style="font-weight:600;">KOSMO AI</div>
+            <div class="cap-grid">
+                <div class="cap-card">
+                    <span class="cap-emoji">📄</span>
+                    <div class="cap-title">Documenti</div>
+                    <div class="cap-desc">Fatture, preventivi, contratti, lettere, report</div>
                 </div>
-                <div class="phone-screen">
-                    <div style="margin-top:50px;"></div>
-                    <div class="chat-bubble bubble-out">
-                        Fammi un riassunto delle entrate di questo mese.
-                        <span class="bubble-time">18:30</span>
-                    </div>
-                    <div class="chat-bubble bubble-in">
-                        Ecco il report di Febbraio 📊<br><br>
-                        <strong>Totale fatturato:</strong> 4.250€<br>
-                        <strong>Da incassare:</strong> 850€<br><br>
-                        Hai 2 fatture in scadenza questa settimana. Vuoi che mandi un sollecito?
-                        <span class="bubble-time">18:30</span>
-                    </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">🔍</span>
+                    <div class="cap-title">Ricerche</div>
+                    <div class="cap-desc">Fornitori, normative, prezzi, concorrenti</div>
                 </div>
-            </div>
-
-            <!-- Right: Grid Capabilities -->
-            <div>
-                <h2 style="text-align: left;">KOSMO è l'assistente che avresti sempre voluto.</h2>
-                <p class="subheadline">Tutto quello che ti serve, in un'unica chat.</p>
-                
-                <div class="solution-grid">
-                    <div class="cap-badge">
-                        <span class="cap-icon">💸</span>
-                        <span class="cap-text">Fatture Elettroniche</span>
-                    </div>
-                    <div class="cap-badge">
-                        <span class="cap-icon">📋</span>
-                        <span class="cap-text">Preventivi & Contratti</span>
-                    </div>
-                    <div class="cap-badge">
-                        <span class="cap-icon">🔍</span>
-                        <span class="cap-text">Ricerche & Analisi</span>
-                    </div>
-                    <div class="cap-badge">
-                        <span class="cap-icon">⏰</span>
-                        <span class="cap-text">Promemoria Smart</span>
-                    </div>
-                    <div class="cap-badge">
-                        <span class="cap-icon">📊</span>
-                        <span class="cap-text">Tracking Pagamenti</span>
-                    </div>
-                    <div class="cap-badge">
-                        <span class="cap-icon">✉️</span>
-                        <span class="cap-text">Gestione Email</span>
-                    </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">✉️</span>
+                    <div class="cap-title">Comunicazione</div>
+                    <div class="cap-desc">Email, risposte clienti, follow-up, bozze</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">⏰</span>
+                    <div class="cap-title">Promemoria</div>
+                    <div class="cap-desc">Scadenze, appuntamenti, rinnovi</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">📊</span>
+                    <div class="cap-title">Analisi</div>
+                    <div class="cap-desc">Margini, statistiche, confronti periodi</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">🎙️</span>
+                    <div class="cap-title">Voce</div>
+                    <div class="cap-desc">Manda un audio, ricevi risposte vocali</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">👥</span>
+                    <div class="cap-title">Clienti</div>
+                    <div class="cap-desc">Storico, preferenze, CRM leggero</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">🧮</span>
+                    <div class="cap-title">Calcoli</div>
+                    <div class="cap-desc">Preventivi complessi, margini, tasse</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">🌍</span>
+                    <div class="cap-title">Traduzioni</div>
+                    <div class="cap-desc">Documenti, email e chat in 50 lingue</div>
+                </div>
+                <div class="cap-card">
+                    <span class="cap-emoji">💡</span>
+                    <div class="cap-title">Brainstorming</div>
+                    <div class="cap-desc">Idee, naming, copy, strategie marketing</div>
                 </div>
             </div>
         </div>
@@ -771,26 +499,21 @@
     <section class="section">
         <div class="container">
             <h2>Come funziona</h2>
-            
-            <div class="steps-container">
-                <div class="steps-line"></div>
-                
-                <div class="step-item">
-                    <div class="step-number">1</div>
+            <div class="grid grid-3" style="margin-top: 60px;">
+                <div class="step-card">
+                    <div class="step-num">1</div>
                     <h3>Aggiungi</h3>
-                    <p style="color:var(--text-dim)">Salva il numero di KOSMO nella tua rubrica come un normale contatto.</p>
+                    <p style="color:var(--text-dim)">Salva il numero di KOSMO nella tua rubrica WhatsApp.</p>
                 </div>
-                
-                <div class="step-item">
-                    <div class="step-number">2</div>
-                    <h3>Parla</h3>
-                    <p style="color:var(--text-dim)">Invia messaggi vocali o di testo. Chiedi fatture, appuntamenti o info.</p>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Chiedi</h3>
+                    <p style="color:var(--text-dim)">Scrivi o manda un vocale come se parlassi a un assistente umano.</p>
                 </div>
-                
-                <div class="step-item">
-                    <div class="step-number">3</div>
-                    <h3>Rilassati</h3>
-                    <p style="color:var(--text-dim)">KOSMO esegue il lavoro, invia i documenti e ti notifica quando fatto.</p>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Fatto</h3>
+                    <p style="color:var(--text-dim)">KOSMO elabora, crea file, invia email o ti dà la risposta subito.</p>
                 </div>
             </div>
         </div>
@@ -800,68 +523,135 @@
     <section class="section">
         <div class="container">
             <h2>Per chi è KOSMO?</h2>
+            <p class="section-desc">Ogni professione ha le sue sfide. KOSMO le conosce.</p>
+            
             <div class="grid grid-3">
-                
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">🎵</div>
-                    <h3>Produttori Musicali</h3>
-                    <ul>
-                        <li>Fatture sessioni & mix</li>
-                        <li>Tracking pagamenti royalty</li>
-                        <li>Calendario studio</li>
+                <!-- Commercialista -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">🏢</span>
+                        <h3>Commercialista</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Risposte rapide su scadenze fiscali</li>
+                        <li>Calcolo acconti e proiezioni</li>
+                        <li>Bozze email per clienti complessi</li>
+                        <li>Analisi variazioni di bilancio</li>
                     </ul>
                 </div>
 
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">📸</div>
-                    <h3>Fotografi</h3>
-                    <ul>
-                        <li>Preventivi matrimoni</li>
-                        <li>Fatture post-shooting</li>
-                        <li>Consegna materiale</li>
+                <!-- Avvocato -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">⚖️</span>
+                        <h3>Avvocato</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Ricerca giurisprudenza recente</li>
+                        <li>Calcolo termini processuali</li>
+                        <li>Bozze diffide e contratti</li>
+                        <li>Traduzioni legali EN/IT</li>
                     </ul>
                 </div>
 
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">🎨</div>
-                    <h3>Designer</h3>
-                    <ul>
-                        <li>Gestione progetti</li>
-                        <li>Tracking revisioni</li>
-                        <li>Contratti freelance</li>
+                <!-- Agente Immobiliare -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">🏠</span>
+                        <h3>Agente Immobiliare</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Generazione annunci accattivanti</li>
+                        <li>Calcolo rendimento affitti</li>
+                        <li>Bozze preliminari di vendita</li>
+                        <li>Email follow-up clienti visita</li>
                     </ul>
                 </div>
 
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">🏢</div>
-                    <h3>Commercialisti</h3>
-                    <ul>
-                        <li>Fatturazione ricorrente</li>
-                        <li>Scadenze fiscali</li>
-                        <li>Normative rapide</li>
+                <!-- Medico / Dentista -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">🦷</span>
+                        <h3>Medico / Dentista</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Messaggi richiamo pazienti</li>
+                        <li>Spiegazione semplice interventi</li>
+                        <li>Calcolo costi studio/poltrona</li>
+                        <li>Traduzione referti per stranieri</li>
                     </ul>
                 </div>
 
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">🍝</div>
-                    <h3>Ristoratori</h3>
-                    <ul>
-                        <li>Fatture catering</li>
-                        <li>Gestione fornitori</li>
-                        <li>Prenotazioni tavoli</li>
+                <!-- Ristoratore -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">🍝</span>
+                        <h3>Ristoratore</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Calcolo food cost piatti</li>
+                        <li>Traduzione menu in 5 lingue</li>
+                        <li>Risposte a recensioni Tripadvisor</li>
+                        <li>Idee per post social piatti</li>
                     </ul>
                 </div>
 
-                <div class="card use-case-card">
-                    <div style="font-size:2.5rem; margin-bottom:10px;">⚖️</div>
-                    <h3>Avvocati</h3>
-                    <ul>
-                        <li>Parcelle e proforma</li>
-                        <li>Calendario udienze</li>
-                        <li>Ricerca giurisprudenza</li>
+                <!-- Architetto -->
+                <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">📐</span>
+                        <h3>Architetto</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Computi metrici rapidi</li>
+                        <li>Email stato avanzamento lavori</li>
+                        <li>Ricerca normative locali</li>
+                        <li>Preventivi ristrutturazione</li>
                     </ul>
                 </div>
-
+                 <!-- Fotografo -->
+                 <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">📸</span>
+                        <h3>Fotografo</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Preventivi shooting complessi</li>
+                        <li>Contratti cessione diritti</li>
+                        <li>Planning scaletta matrimonio</li>
+                        <li>Email consegna provini</li>
+                    </ul>
+                </div>
+                 <!-- Consulente Mktg -->
+                 <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">🚀</span>
+                        <h3>Consulente Mktg</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Brainstorming piani editoriali</li>
+                        <li>Analisi dati campagne</li>
+                        <li>Copy per landing page e ads</li>
+                        <li>Report mensili per clienti</li>
+                    </ul>
+                </div>
+                 <!-- Personal Trainer -->
+                 <div class="card profession-card">
+                    <div class="prof-header">
+                        <span class="prof-icon">💪</span>
+                        <h3>Personal Trainer</h3>
+                    </div>
+                    <ul class="prof-list">
+                        <li>Creazione schede allenamento</li>
+                        <li>Calcolo fabbisogno calorico</li>
+                        <li>Messaggi motivazionali clienti</li>
+                        <li>Gestione pacchetti e rinnovi</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 40px; color: var(--text-dim);">
+                E molti altri professionisti...
             </div>
         </div>
     </section>
@@ -869,264 +659,319 @@
     <!-- 6. PRICING -->
     <section class="section" id="pricing">
         <div class="container">
-            <h2>Piani Semplici</h2>
-            <p class="section-desc">Scegli la flessibilità mensile o risparmia con il piano annuale.</p>
-
-            <div class="pricing-toggle">
-                <span id="monthly-label" style="font-weight:700; color:var(--white);">Mensile</span>
+            <h2>Investimento minimo,<br>Ritorno massimo.</h2>
+            
+            <div class="toggle-container">
+                <span id="monthly-label" style="font-weight:600">Mensile</span>
                 <label class="switch">
-                    <input type="checkbox" id="pricing-switch">
+                    <input type="checkbox" id="price-switch">
                     <span class="slider"></span>
                 </label>
-                <span id="annual-label" style="color:var(--text-dim);">Annuale</span>
-                <span class="discount-pill">Risparmia 2 mesi</span>
+                <span id="annual-label" style="color:var(--text-dim)">Annuale <span style="color:var(--accent-coral); font-size:0.8em; margin-left:5px;">(-20%)</span></span>
             </div>
 
             <div class="grid grid-3">
                 <!-- STARTER -->
-                <div class="card price-card">
+                <div class="card">
                     <h3>Starter</h3>
-                    <div class="price-amount">
-                        <span class="currency">€</span><span class="amount" data-m="99" data-a="990">99</span>
+                    <p style="color:var(--text-dim); font-size:0.9rem;">Per chi inizia</p>
+                    <div class="price-tag">
+                        €<span class="amount" data-m="99" data-a="79">99</span><span>/mese</span>
                     </div>
-                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
-                    
-                    <ul class="price-features">
+                    <ul class="feature-list">
                         <li>✅ 500 messaggi/mese</li>
                         <li>✅ Fatture illimitate</li>
-                        <li>✅ Promemoria base</li>
-                        <li>✅ Supporto Email</li>
+                        <li>✅ Ricerche web base</li>
+                        <li>✅ Promemoria standard</li>
                     </ul>
-                    <button class="btn btn-outline" style="width:100%">Scegli Starter</button>
+                    <a href="#" class="btn btn-outline" style="width:100%; margin-top:20px;">Inizia Gratis</a>
                 </div>
 
-                <!-- PROFESSIONAL -->
-                <div class="card price-card popular">
-                    <div class="popular-badge">⭐ PIÙ POPOLARE</div>
+                <!-- PRO -->
+                <div class="card" style="border-color: var(--accent-violet); background: rgba(123, 104, 238, 0.05);">
+                    <div class="text-center"><span class="badge badge-violet">Più Popolare</span></div>
                     <h3>Professional</h3>
-                    <div class="price-amount">
-                        <span class="currency">€</span><span class="amount" data-m="199" data-a="1990">199</span>
+                    <p style="color:var(--text-dim); font-size:0.9rem;">Per professionisti attivi</p>
+                    <div class="price-tag" style="color: var(--accent-violet);">
+                        €<span class="amount" data-m="199" data-a="159">199</span><span>/mese</span>
                     </div>
-                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
-                    
-                    <ul class="price-features">
-                        <li>✅ <strong>Messaggi illimitati</strong></li>
-                        <li>✅ Integrazioni avanzate</li>
-                        <li>✅ Supporto WhatsApp</li>
-                        <li>✅ Custom Templates</li>
+                    <ul class="feature-list">
+                        <li>✅ <strong>Messaggi Illimitati</strong></li>
+                        <li>✅ Analisi documenti complessi</li>
+                        <li>✅ Integrazione Calendar</li>
+                        <li>✅ Supporto prioritario</li>
                     </ul>
-                    <button class="btn btn-green" style="width:100%">Prova Gratis</button>
+                    <a href="#" class="btn btn-green" style="width:100%; margin-top:20px;">Prova Gratis 14gg</a>
                 </div>
 
-                <!-- ENTERPRISE -->
-                <div class="card price-card">
-                    <h3>Enterprise</h3>
-                    <div class="price-amount">
-                        <span class="currency">€</span><span class="amount" data-m="399" data-a="3990">399</span>
+                <!-- BUSINESS -->
+                <div class="card">
+                    <h3>Business</h3>
+                    <p style="color:var(--text-dim); font-size:0.9rem;">Per studi e team</p>
+                    <div class="price-tag">
+                        €<span class="amount" data-m="399" data-a="319">399</span><span>/mese</span>
                     </div>
-                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
-                    
-                    <ul class="price-features">
+                    <ul class="feature-list">
                         <li>✅ 3 Utenti inclusi</li>
-                        <li>✅ Integrazioni Custom</li>
-                        <li>✅ Account Manager</li>
-                        <li>✅ SLA Garantito</li>
+                        <li>✅ Integrazioni Custom (API)</li>
+                        <li>✅ Onboarding dedicato</li>
+                        <li>✅ DPA & Conformità avanzata</li>
                     </ul>
-                    <button class="btn btn-outline" style="width:100%">Contattaci</button>
+                    <a href="#" class="btn btn-outline" style="width:100%; margin-top:20px;">Contattaci</a>
                 </div>
             </div>
-            
-            <p style="text-align:center; margin-top:20px; color:var(--text-dim); font-size:0.9rem;">
-                14 giorni gratis. Niente carta di credito richiesta.
-            </p>
         </div>
     </section>
 
     <!-- 7. TESTIMONIALS -->
     <section class="section">
         <div class="container">
-            <h2>Dicono di noi</h2>
-            
-            <div class="grid grid-3">
-                <div class="card">
-                    <div class="quote-icon">“</div>
-                    <p class="quote-text">27 fatture in 15 minuti. Prima ci voleva tutta la mattinata. È una rivoluzione.</p>
-                    <div class="quote-author">Max Kleinz</div>
-                    <div class="quote-role">CEO, Cosmophonix</div>
+            <h2 style="margin-bottom: 60px;">Fatti, non parole.</h2>
+            <div class="grid grid-3" style="text-align: center;">
+                <div>
+                    <h3 style="font-size: 2.5rem; color: var(--accent-violet); margin-bottom: 10px;">200+</h3>
+                    <p style="color:var(--text-dim)">Use cases supportati</p>
                 </div>
-
-                <div class="card">
-                    <div class="quote-icon">“</div>
-                    <p class="quote-text">Non dimentico più niente. KOSMO ricorda per me scadenze e appuntamenti.</p>
-                    <div class="quote-author">Luca R.</div>
-                    <div class="quote-role">Fotografo, Milano</div>
+                <div>
+                    <h3 style="font-size: 2.5rem; color: var(--accent-violet); margin-bottom: 10px;">22</h3>
+                    <p style="color:var(--text-dim)">Professioni diverse</p>
                 </div>
-
-                <div class="card">
-                    <div class="quote-icon">“</div>
-                    <p class="quote-text">Risponde più veloce del mio commercialista. Ho tutto sotto controllo h24.</p>
-                    <div class="quote-author">Sara T.</div>
-                    <div class="quote-role">Sound Engineer, Torino</div>
+                <div>
+                    <h3 style="font-size: 2.5rem; color: var(--accent-violet); margin-bottom: 10px;">&lt;30s</h3>
+                    <p style="color:var(--text-dim)">Tempo medio di risposta</p>
                 </div>
             </div>
-        </div>
 
-        <div class="stats-bar">
-            <div class="container stats-content">
-                <span>⚡ 15 min risparmiati/giorno</span>
-                <span>💰 27 fatture record</span>
-                <span>⭐ 4.9/5 Rating</span>
+            <div class="card" style="margin-top: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 1.2rem; font-style: italic; text-align: center;">
+                    "Il mese scorso dovevo recuperare 27 fatture arretrate. Con KOSMO ci ho messo 15 minuti. Prima avrei perso una mattinata intera."
+                </p>
+                <div class="text-center" style="margin-top: 20px; font-weight: 700;">Marco V.</div>
+                <div class="text-center" style="font-size: 0.9rem; color: var(--text-dim);">Consulente Finanziario</div>
             </div>
         </div>
     </section>
 
     <!-- 8. FAQ -->
     <section class="section">
-        <div class="container" style="max-width: 800px;">
+        <div class="container">
             <h2>Domande Frequenti</h2>
             
-            <div class="faq-item">
-                <button class="faq-question">È difficile da configurare?</button>
-                <div class="faq-answer">Assolutamente no. Ti basta salvare il numero in rubrica e mandare il primo messaggio "Ciao". KOSMO ti guiderà passo passo in meno di 2 minuti.</div>
+            <input type="text" id="faq-input" class="faq-search" placeholder="Cerca nelle domande frequenti..." onkeyup="filterFAQ()">
+            
+            <div class="faq-tabs">
+                <div class="faq-tab active" onclick="filterCategory('all')">Tutte</div>
+                <div class="faq-tab" onclick="filterCategory('iniziare')">Iniziare</div>
+                <div class="faq-tab" onclick="filterCategory('funzionalita')">Funzionalità</div>
+                <div class="faq-tab" onclick="filterCategory('sicurezza')">Sicurezza</div>
+                <div class="faq-tab" onclick="filterCategory('prezzi')">Prezzi</div>
             </div>
 
-            <div class="faq-item">
-                <button class="faq-question">Funziona con la fatturazione elettronica?</button>
-                <div class="faq-answer">Sì, KOSMO è integrato con i principali sistemi di interscambio (SDI) per generare, inviare e conservare fatture elettroniche a norma di legge.</div>
+            <div id="faq-list">
+                <!-- INIZIARE -->
+                <div class="faq-item" data-cat="iniziare">
+                    <div class="faq-q">Come faccio a iniziare? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Aggiungi il numero di KOSMO ai contatti WhatsApp e scrivi "Ciao". Riceverai una guida rapida. Setup in 2 minuti.</div>
+                </div>
+                <div class="faq-item" data-cat="iniziare">
+                    <div class="faq-q">Serve installare un'app? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">No, funziona interamente su WhatsApp. Non devi scaricare nulla né imparare nuove interfacce.</div>
+                </div>
+                <div class="faq-item" data-cat="iniziare">
+                    <div class="faq-q">Posso provare gratis? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Sì, hai 14 giorni di prova gratuita con accesso completo. Nessuna carta di credito richiesta.</div>
+                </div>
+
+                <!-- FUNZIONALITÀ -->
+                <div class="faq-item" data-cat="funzionalita">
+                    <div class="faq-q">Può leggere PDF e immagini? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Sì, puoi inviare PDF o foto di documenti. KOSMO li legge, estrae i dati e risponde alle tue domande sul contenuto.</div>
+                </div>
+                <div class="faq-item" data-cat="funzionalita">
+                    <div class="faq-q">Capisce i messaggi vocali? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Perfettamente. Puoi mandare note vocali mentre guidi o cammini; lui trascrive, esegue e risponde.</div>
+                </div>
+                <div class="faq-item" data-cat="funzionalita">
+                    <div class="faq-q">Le fatture sono valide fiscalmente? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">KOSMO genera fatture in formato standard. Per l'invio allo SDI (Sistema di Interscambio) si integra con i principali gestionali o ti fornisce l'XML pronto.</div>
+                </div>
+
+                <!-- SICUREZZA -->
+                <div class="faq-item" data-cat="sicurezza">
+                    <div class="faq-q">I miei dati sono al sicuro? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Sì. Usiamo crittografia end-to-end e server in Europa conformi al GDPR. Nessuno legge le tue chat.</div>
+                </div>
+                <div class="faq-item" data-cat="sicurezza">
+                    <div class="faq-q">Usate i miei dati per allenare l'AI? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">No. I dati dei clienti Business e Professional sono privati e non vengono utilizzati per il training dei modelli pubblici.</div>
+                </div>
+                
+                <!-- PREZZI -->
+                <div class="faq-item" data-cat="prezzi">
+                    <div class="faq-q">Posso cancellare quando voglio? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Sì, l'abbonamento è mensile senza vincoli. Puoi disdire in qualsiasi momento con un click.</div>
+                </div>
+                <div class="faq-item" data-cat="prezzi">
+                    <div class="faq-q">Come si paga? <span class="faq-icon">+</span></div>
+                    <div class="faq-a">Accettiamo tutte le carte di credito/debito e PayPal. La fatturazione è automatica e deducibile al 100%.</div>
+                </div>
             </div>
             
-            <div class="faq-item">
-                <button class="faq-question">I miei dati sono al sicuro?</button>
-                <div class="faq-answer">La sicurezza è la nostra priorità. Utilizziamo crittografia end-to-end e server sicuri in Europa. Nessuno legge i tuoi dati sensibili.</div>
+            <div class="text-center" style="margin-top: 20px;">
+                <button class="btn btn-outline" style="font-size: 0.9rem;" onclick="showAllFAQ()">Mostra tutte le domande</button>
             </div>
-
-            <div class="faq-item">
-                <button class="faq-question">Posso cancellare quando voglio?</button>
-                <div class="faq-answer">Certamente. Non ci sono vincoli di durata. Puoi disdire l'abbonamento in qualsiasi momento con un semplice click.</div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question">Devo imparare comandi speciali?</button>
-                <div class="faq-answer">No! KOSMO capisce il linguaggio naturale. Puoi scrivergli o mandargli vocali come faresti con un amico. "Fai una fattura a Mario" funziona perfettamente.</div>
-            </div>
-
-             <div class="faq-item">
-                <button class="faq-question">C'è un limite di messaggi?</button>
-                <div class="faq-answer">Il piano Starter ha 500 messaggi inclusi. I piani Professional ed Enterprise hanno messaggi illimitati per non fermare mai il tuo lavoro.</div>
-            </div>
-
-             <div class="faq-item">
-                <button class="faq-question">Può integrarsi con il mio gestionale?</button>
-                <div class="faq-answer">Sì, tramite API o connettori standard. Il piano Enterprise offre integrazioni personalizzate su misura per le tue esigenze aziendali.</div>
-            </div>
-            
-             <div class="faq-item">
-                <button class="faq-question">Funziona per team?</button>
-                <div class="faq-answer">Il piano Enterprise supporta fino a 3 utenti che possono interagire con lo stesso assistente aziendale, condividendo dati e scadenze.</div>
-            </div>
-
-             <div class="faq-item">
-                <button class="faq-question">Sostituisce il commercialista?</button>
-                <div class="faq-answer">KOSMO è un assistente operativo, non fiscale. Aiuta a raccogliere e organizzare i dati, ma per la consulenza fiscale vera e propria consigliamo sempre un commercialista (a cui KOSMO può inviare report!).</div>
-            </div>
-
-             <div class="faq-item">
-                <button class="faq-question">Serve connessione internet?</button>
-                <div class="faq-answer">Sì, essendo basato su WhatsApp e Cloud AI, è necessaria una connessione dati attiva sul tuo smartphone.</div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question">Posso provare prima?</button>
-                <div class="faq-answer">Assolutamente. Offriamo 14 giorni di prova gratuita con tutte le funzionalità attive, senza bisogno di inserire la carta di credito.</div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question">Come funziona il supporto?</button>
-                <div class="faq-answer">Per i clienti Starter via email. Per i clienti Pro ed Enterprise, hai supporto prioritario direttamente su WhatsApp.</div>
-            </div>
-
         </div>
     </section>
 
-    <!-- 9. FINAL CTA -->
-    <section class="final-cta">
+    <!-- 9. TRUST & SECURITY -->
+    <section class="section" style="background: rgba(10,31,68,0.5);">
         <div class="container">
-            <h2>Smetti di perdere tempo.<br>Inizia a lavorare di nuovo.</h2>
-            <br>
-            <a href="#" class="btn btn-green" style="font-size:1.2rem; padding: 20px 40px;">Inizia la prova gratuita</a>
+            <h2>I tuoi dati sono al sicuro.</h2>
+            <p class="section-desc">Privacy e sicurezza non sono optional. Sono le fondamenta.</p>
             
-            <div class="checks">
-                <span>✅ Nessuna carta richiesta</span>
-                <span>✅ Setup in 2 minuti</span>
-                <span>✅ Cancelli quando vuoi</span>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">🔒</div>
+                    <h4>Crittografia</h4>
+                    <p style="font-size:0.9rem; color:var(--text-dim)">End-to-end security su ogni messaggio.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🇪🇺</div>
+                    <h4>GDPR Ready</h4>
+                    <p style="font-size:0.9rem; color:var(--text-dim)">Server in Europa e conformità piena.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🛡️</div>
+                    <h4>Accesso Esclusivo</h4>
+                    <p style="font-size:0.9rem; color:var(--text-dim)">Solo gli utenti autorizzati accedono ai dati.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🗑️</div>
+                    <h4>Data Control</h4>
+                    <p style="font-size:0.9rem; color:var(--text-dim)">Cancella i tuoi dati quando vuoi.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 10. FOOTER -->
+    <!-- 10. FINAL CTA -->
+    <section class="section text-center">
+        <div class="container">
+            <h2>Pronto a riprenderti il tuo tempo?</h2>
+            <p class="subheadline" style="margin: 20px auto 40px;">Provalo ora. Bastano 2 minuti.</p>
+            <a href="https://wa.me/393534739386?text=Ciao" class="btn btn-green" style="font-size: 1.3rem; padding: 20px 40px;">
+                Inizia la prova gratuita
+            </a>
+            <p style="margin-top: 20px; color: var(--text-dim); font-size: 0.9rem;">Nessuna carta di credito richiesta • Setup istantaneo</p>
+        </div>
+    </section>
+
+    <!-- 11. FOOTER -->
     <footer>
-        <div class="container">
-            <div class="logo" style="font-size: 2rem; margin-bottom: 20px;">KOSMO</div>
+        <div class="container text-center">
+            <div class="footer-logo">KOSMO</div>
+            <p style="font-size: 1.5rem; font-weight: 600; color: var(--white); margin-bottom: 30px;">
+                Fai di più. Pensa di meno.
+            </p>
             
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Termini di Servizio</a>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; color: var(--text-dim);">
+                <a href="#">Privacy</a>
+                <a href="#">Termini</a>
                 <a href="#">Contatti</a>
                 <a href="#">Blog</a>
             </div>
-
-            <p style="font-size: 1.2rem; font-weight: 500; color: var(--white); margin-bottom: 10px;">
-                Fai di più. Pensa di meno.
-            </p>
-            <p>
-                © 2026 KOSMO AI. Fatto in Italia con ❤️
+            
+            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3);">
+                © 2026 KOSMO AI. Tutti i diritti riservati.
             </p>
         </div>
     </footer>
 
-    <!-- INTERACTIVITY SCRIPT -->
+    <!-- JS LOGIC -->
     <script>
-        // FAQ Accordion
-        const questions = document.querySelectorAll('.faq-question');
-        questions.forEach(q => {
-            q.addEventListener('click', () => {
-                q.classList.toggle('active');
-                const answer = q.nextElementSibling;
-                answer.classList.toggle('open');
+        // PRICING TOGGLE
+        const switchInput = document.getElementById('price-switch');
+        const amounts = document.querySelectorAll('.amount');
+        const mLabel = document.getElementById('monthly-label');
+        const aLabel = document.getElementById('annual-label');
+
+        switchInput.addEventListener('change', function() {
+            const isAnnual = this.checked;
+            
+            if (isAnnual) {
+                mLabel.style.color = "var(--text-dim)";
+                aLabel.style.color = "var(--white)";
+                aLabel.style.fontWeight = "600";
+                mLabel.style.fontWeight = "400";
+            } else {
+                mLabel.style.color = "var(--white)";
+                aLabel.style.color = "var(--text-dim)";
+                mLabel.style.fontWeight = "600";
+                aLabel.style.fontWeight = "400";
+            }
+
+            amounts.forEach(span => {
+                span.textContent = isAnnual ? span.dataset.a : span.dataset.m;
+                // Simple animation
+                span.style.opacity = 0;
+                setTimeout(() => span.style.opacity = 1, 200);
             });
         });
 
-        // Pricing Toggle
-        const toggle = document.getElementById('pricing-switch');
-        const amounts = document.querySelectorAll('.amount');
-        const periods = document.querySelectorAll('.price-period');
-        const monthlyLabel = document.getElementById('monthly-label');
-        const annualLabel = document.getElementById('annual-label');
-
-        toggle.addEventListener('change', () => {
-            const isAnnual = toggle.checked;
-            
-            // Update labels style
-            if(isAnnual) {
-                annualLabel.style.fontWeight = '700';
-                annualLabel.style.color = 'var(--white)';
-                monthlyLabel.style.fontWeight = '400';
-                monthlyLabel.style.color = 'var(--text-dim)';
-            } else {
-                monthlyLabel.style.fontWeight = '700';
-                monthlyLabel.style.color = 'var(--white)';
-                annualLabel.style.fontWeight = '400';
-                annualLabel.style.color = 'var(--text-dim)';
-            }
-
-            // Update prices
-            amounts.forEach(el => {
-                el.textContent = isAnnual ? el.dataset.a : el.dataset.m;
+        // FAQ LOGIC
+        // Toggle Accordion
+        document.querySelectorAll('.faq-q').forEach(item => {
+            item.addEventListener('click', event => {
+                const parent = item.parentElement;
+                parent.classList.toggle('open');
             });
-            
-            // Update periods text
-            periods.forEach(el => {
-                el.textContent = isAnnual ? el.dataset.a : el.dataset.m;
+        });
+
+        // Filter by Category
+        function filterCategory(cat) {
+            // Update tabs
+            document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                if (cat === 'all' || item.dataset.cat === cat) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Search Filter
+        function filterFAQ() {
+            const input = document.getElementById('faq-input');
+            const filter = input.value.toUpperCase();
+            const items = document.querySelectorAll('.faq-item');
+
+            items.forEach(item => {
+                const text = item.textContent || item.innerText;
+                if (text.toUpperCase().indexOf(filter) > -1) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function showAllFAQ() {
+            document.querySelectorAll('.faq-item').forEach(item => item.style.display = 'block');
+            document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+            // Could load more here if pagination was implemented
+        }
+
+        // Smooth Scroll for Anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
