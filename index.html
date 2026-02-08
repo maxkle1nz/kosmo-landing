@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOSMO • Il tuo assistente personale su WhatsApp</title>
+    <meta name="description" content="KOSMO è l'assistente AI su WhatsApp che gestisce le tue fatture, organizza la tua email e non ti fa perdere mai una scadenza.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-deep: #0A1F44;
+            --accent-violet: #7B68EE;
+            --accent-coral: #FF6B6B;
+            --whatsapp-green: #25D366;
+            --white: #FFFFFF;
+            --text-dim: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --blur: 10px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- LAYOUT UTILS --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .section { padding: 60px 0; }
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 3.5rem; letter-spacing: -0.02em; }
+        h2 { font-size: 2.5rem; letter-spacing: -0.01em; margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        
+        .subheadline {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .section-desc {
+            text-align: center;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: -1.5rem auto 3rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+        }
+
+        /* --- COMPONENTS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-green {
+            background: var(--whatsapp-green);
+            color: #fff;
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(var(--blur));
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 24px 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #fff 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(123,104,238,0.2) 0%, rgba(10,31,68,0) 70%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 32px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+        
+        .avatars { display: flex; }
+        .avatars img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-deep);
+            margin-left: -10px;
+        }
+        .avatars img:first-child { margin-left: 0; }
+
+        /* PHONE MOCKUP */
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: #111;
+            border-radius: 40px;
+            border: 8px solid #2c2c2c;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        
+        .phone-screen {
+            background: #0d1418; /* WhatsApp dark bg */
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: hidden;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .chat-header {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: #202c33;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: #e9edef;
+            z-index: 2;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .bubble-in {
+            align-self: flex-start;
+            background: #202c33;
+            color: #e9edef;
+            border-top-left-radius: 0;
+            margin-top: 40px; /* space for header */
+        }
+        
+        .bubble-out {
+            align-self: flex-end;
+            background: #005c4b;
+            color: #e9edef;
+            border-top-right-radius: 0;
+        }
+
+        .bubble-time {
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+            display: block;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .subheadline { margin: 0 auto 2rem; }
+            .social-proof { justify-content: center; }
+            .phone-mockup { margin-top: 40px; height: 500px; }
+        }
+
+        /* --- PROBLEM --- */
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        /* --- SOLUTION --- */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .cap-badge {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cap-badge:hover { background: rgba(255,255,255,0.08); }
+        .cap-icon { font-size: 2rem; }
+        .cap-text { font-weight: 500; font-size: 0.95rem; }
+
+        /* --- HOW IT WORKS --- */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            position: relative;
+        }
+
+        .steps-line {
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-violet), transparent);
+            z-index: 0;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-deep);
+            border: 2px solid var(--accent-violet);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-violet);
+            margin: 0 auto 24px;
+            box-shadow: 0 0 20px rgba(123,104,238,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .steps-container { grid-template-columns: 1fr; }
+            .steps-line { display: none; }
+        }
+
+        /* --- USE CASES --- */
+        .use-case-card ul {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+        .use-case-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .use-case-card li::before {
+            content: "•";
+            color: var(--accent-coral);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* --- PRICING --- */
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-violet); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        .discount-pill {
+            background: var(--accent-coral);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .price-card {
+            text-align: center;
+            position: relative;
+        }
+        
+        .price-card.popular {
+            border: 2px solid var(--accent-violet);
+            background: rgba(123,104,238,0.1);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-violet);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 16px 0;
+        }
+        
+        .price-period {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .price-features {
+            text-align: left;
+            margin: 24px 0;
+            color: var(--text-dim);
+        }
+        .price-features li { margin-bottom: 10px; }
+
+        /* --- TESTIMONIALS --- */
+        .quote-icon {
+            font-size: 2rem;
+            color: var(--accent-violet);
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+        .quote-author {
+            font-weight: 700;
+            color: var(--white);
+        }
+        .quote-role {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+        
+        .stats-bar {
+            background: var(--glass-bg);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 24px 0;
+            margin-top: 60px;
+        }
+        .stats-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* --- FAQ --- */
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 12px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .faq-question.active::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            color: var(--text-dim);
+        }
+        
+        .faq-answer.open {
+            padding: 0 20px 20px;
+            max-height: 200px;
+        }
+
+        /* --- FINAL CTA --- */
+        .final-cta {
+            text-align: center;
+            padding: 80px 0;
+            background: radial-gradient(circle at center, rgba(37,211,102,0.1) 0%, rgba(10,31,68,0) 70%);
+        }
+        
+        .checks {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 32px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 60px 0 30px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">KOSMO</div>
+            <a href="#contact" class="btn btn-outline">Contattaci</a>
+        </div>
+    </header>
+
+    <!-- 1. HERO -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div>
+                <h1>Il tuo assistente personale su WhatsApp.</h1>
+                <p class="subheadline">Non un altro software complicato. KOSMO è l'AI che vive nella tua chat preferita e lavora mentre tu dormi.</p>
+                
+                <a href="#pricing" class="btn btn-green">Prova gratis per 14 giorni</a>
+                
+                <div class="social-proof">
+                    <div class="avatars">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="User">
+                        <img src="https://i.pravatar.cc/100?img=2" alt="User">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="User">
+                    </div>
+                    <span>Scelto da 500+ professionisti</span>
+                </div>
+            </div>
+            
+            <div class="phone-mockup">
+                <div class="chat-header">
+                    <div style="width:35px;height:35px;background:#25D366;border-radius:50%;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;">K</div>
+                    <div>
+                        <div style="font-weight:600;">KOSMO AI</div>
+                        <div style="font-size:11px;opacity:0.8;">Online</div>
+                    </div>
+                </div>
+                <div class="phone-screen">
+                    <div style="margin-top:50px;"></div> <!-- Spacer -->
+                    
+                    <div class="chat-bubble bubble-out">
+                        Ciao KOSMO! Crea una fattura per Studio Rossi, 500€ per consulenza web.
+                        <span class="bubble-time">10:42</span>
+                    </div>
+                    
+                    <div class="chat-bubble bubble-in">
+                        Certamente! 📄<br>
+                        <strong>Fattura #42 generata con successo.</strong><br>
+                        Importo: 500€ + IVA<br>
+                        Destinatario: Studio Rossi<br><br>
+                        La invio subito via email?
+                        <span class="bubble-time">10:42</span>
+                    </div>
+
+                    <div class="chat-bubble bubble-out">
+                        Sì, grazie! E ricordami di chiamarli lunedì.
+                        <span class="bubble-time">10:43</span>
+                    </div>
+
+                    <div class="chat-bubble bubble-in">
+                        Fatto! ✅ Email inviata.<br>
+                        Ho impostato un promemoria per lunedì alle 9:00: "Chiamare Studio Rossi".
+                        <span class="bubble-time">10:43</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PROBLEM -->
+    <section class="section">
+        <div class="container">
+            <h2>Sei un professionista,<br>non un amministratore.</h2>
+            <p class="section-desc">Quanto tempo perdi ogni giorno in attività che non portano valore al tuo business?</p>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="problem-icon">📄</div>
+                    <h3>Fatture infinite</h3>
+                    <p style="color:var(--text-dim)">Ore perse a compilare dati, calcolare IVA e inseguire i pagamenti. La burocrazia uccide la creatività.</p>
+                </div>
+                <div class="card">
+                    <div class="problem-icon">📧</div>
+                    <h3>Caos Comunicativo</h3>
+                    <p style="color:var(--text-dim)">Messaggi su WhatsApp, email perse, note vocali dimenticate. Ritrovare un'informazione è un incubo.</p>
+                </div>
+                <div class="card">
+                    <div class="problem-icon">🗓️</div>
+                    <h3>Scadenze Perse</h3>
+                    <p style="color:var(--text-dim)">Quel rinnovo dimenticato o quella call mancata che ti costano clienti e reputazione.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SOLUTION -->
+    <section class="section">
+        <div class="container grid grid-2" style="align-items: center;">
+            
+            <!-- Left: Mockup (Simplified for secondary view) -->
+            <div class="phone-mockup" style="height: 500px; margin: 0 auto;">
+                <div class="chat-header">
+                     <div style="width:35px;height:35px;background:#25D366;border-radius:50%;margin-right:10px;display:flex;align-items:center;justify-content:center;">K</div>
+                     <div style="font-weight:600;">KOSMO AI</div>
+                </div>
+                <div class="phone-screen">
+                    <div style="margin-top:50px;"></div>
+                    <div class="chat-bubble bubble-out">
+                        Fammi un riassunto delle entrate di questo mese.
+                        <span class="bubble-time">18:30</span>
+                    </div>
+                    <div class="chat-bubble bubble-in">
+                        Ecco il report di Febbraio 📊<br><br>
+                        <strong>Totale fatturato:</strong> 4.250€<br>
+                        <strong>Da incassare:</strong> 850€<br><br>
+                        Hai 2 fatture in scadenza questa settimana. Vuoi che mandi un sollecito?
+                        <span class="bubble-time">18:30</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Grid Capabilities -->
+            <div>
+                <h2 style="text-align: left;">KOSMO è l'assistente che avresti sempre voluto.</h2>
+                <p class="subheadline">Tutto quello che ti serve, in un'unica chat.</p>
+                
+                <div class="solution-grid">
+                    <div class="cap-badge">
+                        <span class="cap-icon">💸</span>
+                        <span class="cap-text">Fatture Elettroniche</span>
+                    </div>
+                    <div class="cap-badge">
+                        <span class="cap-icon">📋</span>
+                        <span class="cap-text">Preventivi & Contratti</span>
+                    </div>
+                    <div class="cap-badge">
+                        <span class="cap-icon">🔍</span>
+                        <span class="cap-text">Ricerche & Analisi</span>
+                    </div>
+                    <div class="cap-badge">
+                        <span class="cap-icon">⏰</span>
+                        <span class="cap-text">Promemoria Smart</span>
+                    </div>
+                    <div class="cap-badge">
+                        <span class="cap-icon">📊</span>
+                        <span class="cap-text">Tracking Pagamenti</span>
+                    </div>
+                    <div class="cap-badge">
+                        <span class="cap-icon">✉️</span>
+                        <span class="cap-text">Gestione Email</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. HOW IT WORKS -->
+    <section class="section">
+        <div class="container">
+            <h2>Come funziona</h2>
+            
+            <div class="steps-container">
+                <div class="steps-line"></div>
+                
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Aggiungi</h3>
+                    <p style="color:var(--text-dim)">Salva il numero di KOSMO nella tua rubrica come un normale contatto.</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Parla</h3>
+                    <p style="color:var(--text-dim)">Invia messaggi vocali o di testo. Chiedi fatture, appuntamenti o info.</p>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Rilassati</h3>
+                    <p style="color:var(--text-dim)">KOSMO esegue il lavoro, invia i documenti e ti notifica quando fatto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. USE CASES -->
+    <section class="section">
+        <div class="container">
+            <h2>Per chi è KOSMO?</h2>
+            <div class="grid grid-3">
+                
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">🎵</div>
+                    <h3>Produttori Musicali</h3>
+                    <ul>
+                        <li>Fatture sessioni & mix</li>
+                        <li>Tracking pagamenti royalty</li>
+                        <li>Calendario studio</li>
+                    </ul>
+                </div>
+
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">📸</div>
+                    <h3>Fotografi</h3>
+                    <ul>
+                        <li>Preventivi matrimoni</li>
+                        <li>Fatture post-shooting</li>
+                        <li>Consegna materiale</li>
+                    </ul>
+                </div>
+
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">🎨</div>
+                    <h3>Designer</h3>
+                    <ul>
+                        <li>Gestione progetti</li>
+                        <li>Tracking revisioni</li>
+                        <li>Contratti freelance</li>
+                    </ul>
+                </div>
+
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">🏢</div>
+                    <h3>Commercialisti</h3>
+                    <ul>
+                        <li>Fatturazione ricorrente</li>
+                        <li>Scadenze fiscali</li>
+                        <li>Normative rapide</li>
+                    </ul>
+                </div>
+
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">🍝</div>
+                    <h3>Ristoratori</h3>
+                    <ul>
+                        <li>Fatture catering</li>
+                        <li>Gestione fornitori</li>
+                        <li>Prenotazioni tavoli</li>
+                    </ul>
+                </div>
+
+                <div class="card use-case-card">
+                    <div style="font-size:2.5rem; margin-bottom:10px;">⚖️</div>
+                    <h3>Avvocati</h3>
+                    <ul>
+                        <li>Parcelle e proforma</li>
+                        <li>Calendario udienze</li>
+                        <li>Ricerca giurisprudenza</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PRICING -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <h2>Piani Semplici</h2>
+            <p class="section-desc">Scegli la flessibilità mensile o risparmia con il piano annuale.</p>
+
+            <div class="pricing-toggle">
+                <span id="monthly-label" style="font-weight:700; color:var(--white);">Mensile</span>
+                <label class="switch">
+                    <input type="checkbox" id="pricing-switch">
+                    <span class="slider"></span>
+                </label>
+                <span id="annual-label" style="color:var(--text-dim);">Annuale</span>
+                <span class="discount-pill">Risparmia 2 mesi</span>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- STARTER -->
+                <div class="card price-card">
+                    <h3>Starter</h3>
+                    <div class="price-amount">
+                        <span class="currency">€</span><span class="amount" data-m="99" data-a="990">99</span>
+                    </div>
+                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
+                    
+                    <ul class="price-features">
+                        <li>✅ 500 messaggi/mese</li>
+                        <li>✅ Fatture illimitate</li>
+                        <li>✅ Promemoria base</li>
+                        <li>✅ Supporto Email</li>
+                    </ul>
+                    <button class="btn btn-outline" style="width:100%">Scegli Starter</button>
+                </div>
+
+                <!-- PROFESSIONAL -->
+                <div class="card price-card popular">
+                    <div class="popular-badge">⭐ PIÙ POPOLARE</div>
+                    <h3>Professional</h3>
+                    <div class="price-amount">
+                        <span class="currency">€</span><span class="amount" data-m="199" data-a="1990">199</span>
+                    </div>
+                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
+                    
+                    <ul class="price-features">
+                        <li>✅ <strong>Messaggi illimitati</strong></li>
+                        <li>✅ Integrazioni avanzate</li>
+                        <li>✅ Supporto WhatsApp</li>
+                        <li>✅ Custom Templates</li>
+                    </ul>
+                    <button class="btn btn-green" style="width:100%">Prova Gratis</button>
+                </div>
+
+                <!-- ENTERPRISE -->
+                <div class="card price-card">
+                    <h3>Enterprise</h3>
+                    <div class="price-amount">
+                        <span class="currency">€</span><span class="amount" data-m="399" data-a="3990">399</span>
+                    </div>
+                    <div class="price-period" data-m="/mese" data-a="/anno">/mese</div>
+                    
+                    <ul class="price-features">
+                        <li>✅ 3 Utenti inclusi</li>
+                        <li>✅ Integrazioni Custom</li>
+                        <li>✅ Account Manager</li>
+                        <li>✅ SLA Garantito</li>
+                    </ul>
+                    <button class="btn btn-outline" style="width:100%">Contattaci</button>
+                </div>
+            </div>
+            
+            <p style="text-align:center; margin-top:20px; color:var(--text-dim); font-size:0.9rem;">
+                14 giorni gratis. Niente carta di credito richiesta.
+            </p>
+        </div>
+    </section>
+
+    <!-- 7. TESTIMONIALS -->
+    <section class="section">
+        <div class="container">
+            <h2>Dicono di noi</h2>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="quote-icon">“</div>
+                    <p class="quote-text">27 fatture in 15 minuti. Prima ci voleva tutta la mattinata. È una rivoluzione.</p>
+                    <div class="quote-author">Max Kleinz</div>
+                    <div class="quote-role">CEO, Cosmophonix</div>
+                </div>
+
+                <div class="card">
+                    <div class="quote-icon">“</div>
+                    <p class="quote-text">Non dimentico più niente. KOSMO ricorda per me scadenze e appuntamenti.</p>
+                    <div class="quote-author">Luca R.</div>
+                    <div class="quote-role">Fotografo, Milano</div>
+                </div>
+
+                <div class="card">
+                    <div class="quote-icon">“</div>
+                    <p class="quote-text">Risponde più veloce del mio commercialista. Ho tutto sotto controllo h24.</p>
+                    <div class="quote-author">Sara T.</div>
+                    <div class="quote-role">Sound Engineer, Torino</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="container stats-content">
+                <span>⚡ 15 min risparmiati/giorno</span>
+                <span>💰 27 fatture record</span>
+                <span>⭐ 4.9/5 Rating</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section class="section">
+        <div class="container" style="max-width: 800px;">
+            <h2>Domande Frequenti</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">È difficile da configurare?</button>
+                <div class="faq-answer">Assolutamente no. Ti basta salvare il numero in rubrica e mandare il primo messaggio "Ciao". KOSMO ti guiderà passo passo in meno di 2 minuti.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Funziona con la fatturazione elettronica?</button>
+                <div class="faq-answer">Sì, KOSMO è integrato con i principali sistemi di interscambio (SDI) per generare, inviare e conservare fatture elettroniche a norma di legge.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">I miei dati sono al sicuro?</button>
+                <div class="faq-answer">La sicurezza è la nostra priorità. Utilizziamo crittografia end-to-end e server sicuri in Europa. Nessuno legge i tuoi dati sensibili.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Posso cancellare quando voglio?</button>
+                <div class="faq-answer">Certamente. Non ci sono vincoli di durata. Puoi disdire l'abbonamento in qualsiasi momento con un semplice click.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Devo imparare comandi speciali?</button>
+                <div class="faq-answer">No! KOSMO capisce il linguaggio naturale. Puoi scrivergli o mandargli vocali come faresti con un amico. "Fai una fattura a Mario" funziona perfettamente.</div>
+            </div>
+
+             <div class="faq-item">
+                <button class="faq-question">C'è un limite di messaggi?</button>
+                <div class="faq-answer">Il piano Starter ha 500 messaggi inclusi. I piani Professional ed Enterprise hanno messaggi illimitati per non fermare mai il tuo lavoro.</div>
+            </div>
+
+             <div class="faq-item">
+                <button class="faq-question">Può integrarsi con il mio gestionale?</button>
+                <div class="faq-answer">Sì, tramite API o connettori standard. Il piano Enterprise offre integrazioni personalizzate su misura per le tue esigenze aziendali.</div>
+            </div>
+            
+             <div class="faq-item">
+                <button class="faq-question">Funziona per team?</button>
+                <div class="faq-answer">Il piano Enterprise supporta fino a 3 utenti che possono interagire con lo stesso assistente aziendale, condividendo dati e scadenze.</div>
+            </div>
+
+             <div class="faq-item">
+                <button class="faq-question">Sostituisce il commercialista?</button>
+                <div class="faq-answer">KOSMO è un assistente operativo, non fiscale. Aiuta a raccogliere e organizzare i dati, ma per la consulenza fiscale vera e propria consigliamo sempre un commercialista (a cui KOSMO può inviare report!).</div>
+            </div>
+
+             <div class="faq-item">
+                <button class="faq-question">Serve connessione internet?</button>
+                <div class="faq-answer">Sì, essendo basato su WhatsApp e Cloud AI, è necessaria una connessione dati attiva sul tuo smartphone.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">Posso provare prima?</button>
+                <div class="faq-answer">Assolutamente. Offriamo 14 giorni di prova gratuita con tutte le funzionalità attive, senza bisogno di inserire la carta di credito.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">Come funziona il supporto?</button>
+                <div class="faq-answer">Per i clienti Starter via email. Per i clienti Pro ed Enterprise, hai supporto prioritario direttamente su WhatsApp.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 9. FINAL CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Smetti di perdere tempo.<br>Inizia a lavorare di nuovo.</h2>
+            <br>
+            <a href="#" class="btn btn-green" style="font-size:1.2rem; padding: 20px 40px;">Inizia la prova gratuita</a>
+            
+            <div class="checks">
+                <span>✅ Nessuna carta richiesta</span>
+                <span>✅ Setup in 2 minuti</span>
+                <span>✅ Cancelli quando vuoi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="font-size: 2rem; margin-bottom: 20px;">KOSMO</div>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Termini di Servizio</a>
+                <a href="#">Contatti</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <p style="font-size: 1.2rem; font-weight: 500; color: var(--white); margin-bottom: 10px;">
+                Fai di più. Pensa di meno.
+            </p>
+            <p>
+                © 2026 KOSMO AI. Fatto in Italia con ❤️
+            </p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPT -->
+    <script>
+        // FAQ Accordion
+        const questions = document.querySelectorAll('.faq-question');
+        questions.forEach(q => {
+            q.addEventListener('click', () => {
+                q.classList.toggle('active');
+                const answer = q.nextElementSibling;
+                answer.classList.toggle('open');
+            });
+        });
+
+        // Pricing Toggle
+        const toggle = document.getElementById('pricing-switch');
+        const amounts = document.querySelectorAll('.amount');
+        const periods = document.querySelectorAll('.price-period');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+
+        toggle.addEventListener('change', () => {
+            const isAnnual = toggle.checked;
+            
+            // Update labels style
+            if(isAnnual) {
+                annualLabel.style.fontWeight = '700';
+                annualLabel.style.color = 'var(--white)';
+                monthlyLabel.style.fontWeight = '400';
+                monthlyLabel.style.color = 'var(--text-dim)';
+            } else {
+                monthlyLabel.style.fontWeight = '700';
+                monthlyLabel.style.color = 'var(--white)';
+                annualLabel.style.fontWeight = '400';
+                annualLabel.style.color = 'var(--text-dim)';
+            }
+
+            // Update prices
+            amounts.forEach(el => {
+                el.textContent = isAnnual ? el.dataset.a : el.dataset.m;
+            });
+            
+            // Update periods text
+            periods.forEach(el => {
+                el.textContent = isAnnual ? el.dataset.a : el.dataset.m;
+            });
+        });
+    </script>
+</body>
+</html>
